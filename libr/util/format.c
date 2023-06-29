@@ -1262,8 +1262,6 @@ static void r_print_format_word(RPrintFormat *pf, const char *setval, ut64 seeki
 			}
 			pj_end (pf->pj);
 		}
-	} else {
-		p->cb_printf ("\n");
 	}
 }
 
