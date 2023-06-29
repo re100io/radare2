@@ -1909,7 +1909,7 @@ static int r_print_format_struct(RPrintFormat *pf, ut64 seek, const ut8* b, int 
 	int ret = r_print_format_struct_size (p, fmt, mode, 0);
 	if (!MUSTSEESTRUCT && MUSTSEE) {
 		const char *pad = r_str_pad (' ', R_MAX (0, pf->ident));
-		p->cb_printf ("%s%s}\n", pad, ' ', name);
+		p->cb_printf ("%s%s}\n", pad, name);
 	}
 	free (fmt);
 	return ret;
