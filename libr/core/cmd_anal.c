@@ -761,6 +761,7 @@ static RCoreHelpMessage help_msg_ag = {
 	"agc", "[format]", "function callgraph",
 	"agC", "[format]", "global callgraph",
 	"agd", "[format] [fcn addr]", "diff graph",
+	"agD", "[format]", "function dom graph",
 	"agf", "[format]", "basic blocks function graph",
 	"agi", "[format]", "imports graph",
 	"agr", "[format]", "references graph",
@@ -11137,10 +11138,13 @@ static void cmd_anal_graph(RCore *core, const char *input) {
 		return;
 	}
 	switch (input[0]) {
+	case 'D': // "agD"-> dom function graph
+		r_core_visual_graph (core, NULL, NULL, 3); // 3 means dom graph
+		break;
 	case 'f': // "agf"
 		switch (input[1]) {
 		case 0: // "agf"
-			r_core_visual_graph (core, NULL, NULL, false);
+			r_core_visual_graph (core, NULL, NULL, 0);
 			break;
 		case 'b': // "agfb" // braile
 			cmd_agfb (core);
@@ -11148,11 +11152,12 @@ static void cmd_anal_graph(RCore *core, const char *input) {
 		case 'm': /// "agfm" // mermaid
 			cmd_graph_mermaid (core, input[2] == 'a');
 			break;
-		case ' ': { // "agf "
-			RAnalFunction *fcn = r_anal_get_fcn_in (core->anal, core->offset, 0);
-			r_core_visual_graph (core, NULL, fcn, false);
+		case ' ': // "agf "
+			{
+				RAnalFunction *fcn = r_anal_get_fcn_in (core->anal, core->offset, 0);
+				r_core_visual_graph (core, NULL, fcn, false);
+			}
 			break;
-		}
 		case 'v': // "agfv"
 		{
 			RAnalFunction *fcn = r_anal_get_fcn_in (core->anal, core->offset, R_ANAL_FCN_TYPE_ROOT);
