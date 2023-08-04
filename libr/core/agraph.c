@@ -4403,6 +4403,14 @@ R_API bool r_core_visual_graph(RCore *core, RAGraph *g, RAnalFunction *_fcn, int
 			RGraph *dg = r_graph_dom_tree (g->graph, root);
 			if (dg) {
 				R_LOG_INFO ("pwn");
+				RListIter *iter;
+				RGraphNode *dtnode;
+				r_list_foreach (dg->nodes, iter, dtnode) {
+					RGraphNode *node = (RGraphNode *)dtnode->data;
+					dtnode->data = node->data;
+					dtnode->free = node->free;
+					node->free = NULL;
+				}
 				r_graph_free (g->graph);
 				g->graph = dg;
 			} else {
