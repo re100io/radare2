@@ -3449,8 +3449,7 @@ R_API int r_core_config_init(RCore *core) {
 	SETCB ("anal.limits", "false", (RConfigCallback)&cb_anal_limits, "restrict analysis to address range [anal.from:anal.to]");
 	SETICB ("anal.from", -1, (RConfigCallback)&cb_anal_from, "lower limit on the address range for analysis");
 	SETICB ("anal.to", -1, (RConfigCallback)&cb_anal_from, "upper limit on the address range for analysis");
-	n = NODECB ("anal.in", "io.maps.x", &cb_searchin);
-	// R2_590 - n = NODECB ("anal.in", "io.sections.x", &cb_searchin); // R2R db/anal/calls i think anal.in should change on RCore.fileOpen()
+	n = NODECB ("anal.in", "bin.ormaps.x", &cb_searchin); // R2R db/anal/calls
 	SETDESC (n, "specify search boundaries for analysis");
 	SETOPTIONS (n, "range", "block",
 		"bin.segment", "bin.segments", "bin.segments.x", "bin.segments.r", "bin.section", "bin.sections", "bin.sections.rwx", "bin.sections.r", "bin.sections.rw", "bin.sections.rx", "bin.sections.wx", "bin.sections.x",
