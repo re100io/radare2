@@ -2455,7 +2455,12 @@ static bool bin_symbols(RCore *r, PJ *pj, int mode, ut64 laddr, int va, ut64 at,
 	}
 
 	RBinSymbol *symbol;
+	r_cons_break_push (NULL, NULL);
 	R_VEC_FOREACH (symbols, symbol) {
+		if (r_cons_is_breaked ()) {
+			eprintf ("Breaked\n");
+			break;
+		}
 		if (!symbol->name) {
 			continue;
 		}
@@ -2655,6 +2660,7 @@ next:
 			break;
 		}
 	}
+	r_cons_break_pop ();
 	if (IS_MODE_NORMAL (mode)) {
 		if (r->table_query) {
 			if (!r_table_query (table, r->table_query)) {
